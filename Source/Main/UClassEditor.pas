@@ -242,6 +242,7 @@ type
     procedure DeleteAttributeFromConstructorParameters(Node: TTreeNode;
       Attribute: TAttribute);
     function AsUMLType(AType: string): string;
+    function CombineParameters(Sub, Super: string): string;
   protected
     procedure ReadFromAppStorage(AppStorage: TJvCustomAppStorage;
       const BasePath: string);
@@ -713,17 +714,14 @@ begin
           if Line > -1 then
           begin
             Str := FMyEditor.ActiveSynEdit.Lines[Line];
-            var
-            Head := GetConstructorHead(EExtends.Text);
-            if Head <> '' then
-              Str := MyStringReplace(Str, 'def __init__(self):', Head);
+            var Head := GetConstructorHead(EExtends.Text);
+            Str:= CombineParameters(Str, Head);
             FMyEditor.ActiveSynEdit.Lines[Line] := Str;
+
             Str := FMyEditor.ActiveSynEdit.Lines[Line + 1];
             if Pos('super().__init__', Str) = 0 then
             begin
               Head := PrepareParameter(Head);
-
-              Str := AIndent + 'super().__init__(' + Head + ')';
               Str := FConfiguration.Indent2 + 'super().__init__(' + Head + ')';
               FMyEditor.ActiveSynEdit.Lines.Insert(Line + 1, Str);
             end;
@@ -743,6 +741,50 @@ begin
     UnlockFormUpdate(FMyEditor);
   end;
   BClassApply.Enabled := False;
+end;
+
+function TFClassEditor.CombineParameters(Sub, Super: string): string;
+  var
+    LChild, LParent: TStringList;
+    I: Integer;
+
+  function ExtractParams(const S: string): TStringList;
+  var
+    p1, p2: Integer;
+    ParamStr: string;
+    Item: string;
+  begin
+    Result := TStringList.Create;
+    Result.StrictDelimiter := True;
+    Result.Delimiter := ',';
+
+    p1 := Pos('(', S);
+    p2 := Pos(')', S);
+    if (p1 > 0) and (p2 > p1) then
+    begin
+      ParamStr := Trim(Copy(S, p1 + 1, p2 - p1 - 1));
+      Result.DelimitedText := ParamStr;
+      Item := Trim(Result[0]);
+      if SameText(Item, 'self') then
+        Result.Delete(0);
+    end;
+  end;
+
+begin
+  LChild := ExtractParams(Sub);
+  LParent := ExtractParams(Super);
+  if LChild.Count + LParent.Count > 0 then begin
+    Result := 'def __init__(self';
+    for I := 0 to LParent.Count - 1 do
+      Result := Result + ', ' + LParent[I];
+    for I := 0 to LChild.Count - 1 do
+      Result := Result + ', ' + LChild[I];
+    Result := Result + '):';
+  end else
+    Result := 'def __init__(self):';
+  Result:= GetIndent(1) + Result;
+  LChild.Free;
+  LParent.Free;
 end;
 
 function TFClassEditor.HasMethod(const GetSet, AttributeName: string;
@@ -1595,6 +1637,7 @@ end;
 
 procedure TFClassEditor.DeleteAttributeFromConstructorParameters
   (Node: TTreeNode; Attribute: TAttribute);
+  var Str: string; Pos1, Pos2, Pos3: Integer;
 begin
   var
   Parameter := Attribute.Name;
@@ -1604,26 +1647,28 @@ begin
     Node := Node.GetNext;
   if Assigned(Node) then
   begin
-    var
-    Posi := Pos(', ' + Parameter + ',', Node.Text) + Pos(', ' + Parameter + ')',
-      Node.Text);
-    if Posi > 0 then
-    begin
+    var Operation := GetMethod(Node);
+    Str := Node.Text;
+    Pos1 := Pos(', ' + Parameter + ',', Node.Text) +
+            Pos(', ' + Parameter + ')', Node.Text);
+    if Pos1 > 0 then
+      Delete(Str, Pos1, 2 + Length(Parameter));
+    Pos2 := Pos('(' + Parameter + ',', Node.Text);
+    if Pos2 > 0 then
+      Delete(Str, Pos2 + 1, Length(Parameter) + 2);
+    Pos3 := Pos('(' + Parameter + ')', Node.Text);
+    if Pos3 > 0 then
+      Delete(Str, Pos3 + 1, Length(Parameter));
+    Node.Text := Str;
+
+    if (Pos1 + Pos2 + Pos3 > 0) and Assigned(Operation)
+    then begin
       var
-      Operation := GetMethod(Node);
+      OldHead := Operation.HeadToPython;
+      Operation.DelParameter(Attribute.Name);
       var
-      Str := Node.Text;
-      Delete(Str, Posi, 2 + Length(Parameter));
-      Node.Text := Str;
-      if Assigned(Operation) then
-      begin
-        var
-        OldHead := Operation.HeadToPython;
-        Operation.DelParameter(Attribute.Name);
-        var
-        NewHead := Operation.HeadToPython;
-        FMyEditor.ReplaceLine(OldHead, NewHead);
-      end;
+      NewHead := Operation.HeadToPython;
+      FMyEditor.ReplaceLine(OldHead, NewHead);
     end;
   end;
 end;

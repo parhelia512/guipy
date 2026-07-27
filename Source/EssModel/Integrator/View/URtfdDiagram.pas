@@ -3539,7 +3539,7 @@ begin
   for var I := 0 to SLObjects.Count - 1 do
   begin
     NewObject := SLObjects.KeyNames[I];
-    if FBoxNames.IndexOf(NewObject) = -1 then
+    if (FBoxNames.IndexOf(NewObject) = -1) and (NewObject <> '_abc_data1') then
     begin
       Address := FLivingObjects.getRealAddressFromName(NewObject);
       GI_PyControl.ActiveInterpreter.RunSource(NewObject + ' = ctypes.cast(' +

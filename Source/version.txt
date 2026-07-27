@@ -1,4 +1,8 @@
-8.ß6, 2026.05.21
+8.07, 2026.07.22
+bugfix for inherited constructors
+improvement for abstract classes
+
+8.06, 2026.05.21
 bugfix opening uml windows
 
 8.05, 2026.05.18

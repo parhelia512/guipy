@@ -52,7 +52,7 @@ object FClassEditor: TFClassEditor
     Top = 10
     Width = 364
     Height = 435
-    ActivePage = TSMethods
+    ActivePage = TSClass
     TabOrder = 0
     OnChange = PageControlChange
     object TSClass: TTabSheet
@@ -583,7 +583,7 @@ object FClassEditor: TFClassEditor
         end
         object CBParameter: TComboBox
           Left = 15
-          Top = 128
+          Top = 127
           Width = 157
           Height = 23
           AutoDropDown = True

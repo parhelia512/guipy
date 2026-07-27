@@ -20,8 +20,8 @@ EditViewName=D:\GitProjekte\GitGuiPy\Source\cFindInFiles.pas
 
 [ClosedView_RDpcR2l0UHJvamVrdGVcR2l0R3VpUHlcU291cmNlXEd1aVB5LmRwcg==]
 Module=D:\GitProjekte\GitGuiPy\Source\GuiPy.dpr
-CursorX=53
-CursorY=227
+CursorX=1
+CursorY=236
 TopLine=208
 LeftCol=1
 Elisions=
@@ -100,8 +100,8 @@ EditViewName=D:\GitProjekte\GitGuiPy\Source\Components\PyQt\UQtSpinBoxes.pas
 
 [ClosedView_RDpcR2l0UHJvamVrdGVcR2l0R3VpUHlcU291cmNlXHZlcnNpb24udHh0]
 Module=D:\GitProjekte\GitGuiPy\Source\version.txt
-CursorX=23
-CursorY=2
+CursorX=30
+CursorY=8
 TopLine=1
 LeftCol=1
 Elisions=
@@ -230,9 +230,9 @@ EditViewName=D:\GitProjekte\GitGuiPy\Source\frmFile.pas
 
 [ClosedView_RDpcR2l0UHJvamVrdGVcR2l0R3VpUHlcU291cmNlXGZybUVkaXRvci5wYXM=]
 Module=D:\GitProjekte\GitGuiPy\Source\frmEditor.pas
-CursorX=16
-CursorY=51
-TopLine=49
+CursorX=1
+CursorY=749
+TopLine=733
 LeftCol=1
 Elisions={{635,0},{687,33},{'TDebugSupportPlugin'}}
 Bookmarks=
@@ -407,4 +407,34 @@ LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=D:\GitProjekte\GitGuiPy\Source\EssModel\Integrator\View\URtfdDiagram.pas
+
+[ClosedView_RDpcR2l0UHJvamVrdGVcR2l0R3VpUHlcU291cmNlXE1haW5cVUNsYXNzRWRpdG9yLnBhcw==]
+Module=D:\GitProjekte\GitGuiPy\Source\Main\UClassEditor.pas
+CursorX=23
+CursorY=767
+TopLine=734
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\GitProjekte\GitGuiPy\Source\Main\UClassEditor.pas
+[ClosedView_RDpcR2l0UHJvamVrdGVcR2l0R3VpUHlcU291cmNlXEVzc01vZGVsXFN5c3RlbVxVVU1MRm9ybS5w
+YXM=]
+Module=D:\GitProjekte\GitGuiPy\Source\EssModel\System\UUMLForm.pas
+CursorX=1
+CursorY=380
+TopLine=364
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\GitProjekte\GitGuiPy\Source\EssModel\System\UUMLForm.pas
+
+[ClosedView_RDpcR2l0UHJvamVrdGVcR2l0R3VpUHlcU291cmNlXE1haW5cVUxpdmluZ09iamVjdHMucGFz]
+Module=D:\GitProjekte\GitGuiPy\Source\Main\ULivingObjects.pas
+CursorX=1
+CursorY=376
+TopLine=1
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\GitProjekte\GitGuiPy\Source\Main\ULivingObjects.pas
 

@@ -380,6 +380,8 @@ begin
     for var I := 0 to NameSpace.ChildCount - 1 do
     begin
       NameSpaceItem := NameSpace.ChildNode[I];
+      if NameSpaceItem.Name = '_abc_impl' then
+        continue;
       if IsDunder(NameSpaceItem.Name) then
         Break
       else if IsAttribute(NameSpaceItem) then
